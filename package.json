@@ -4,7 +4,7 @@
   "description": "Expands links to this site into links to cdn.discordapp.com attachments.",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node index.js"
   },
   "author": "samihan",
   "license": "ISC",
