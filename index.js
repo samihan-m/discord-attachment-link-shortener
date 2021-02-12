@@ -28,7 +28,8 @@ app.use(express.static('pages/static/'));
 //Displays the home.html file upon starting the node app
 app.get('/', async (request, response) => {
     //Show the main page.
-    response.sendFile('home.html', {root: page_root});
+    //response.sendFile('home.html', {root: page_root});
+    response.redirect('/shortener');
 });
 
 //Displays the shortener.html file
