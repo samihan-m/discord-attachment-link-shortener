@@ -1,7 +1,7 @@
 version: 0.0
 os: linux
 files:
-  - source: server.js
+  - source: index.js
     destination: /var/www/
 hooks:
   BeforeInstall:
