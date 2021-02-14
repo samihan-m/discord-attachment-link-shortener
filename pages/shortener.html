@@ -139,6 +139,14 @@
             background-color: white;
             padding: 4px 1em;
         }
+        /*Make credit link cyan.*/
+        a.credit, a:visited.credit {
+            color: cyan;
+        }
+        /*Make active credit link purple*/
+        a:active.credit {
+            color: purple;
+        }
         </style>
     </head>
     <body>
@@ -170,7 +178,7 @@
             <div id="hidden-output-box">
                 <input id="copiable-link" type="text" value="error" class="hidden">
             </div>
-            <h5>by <a href="https://github.com/samihan-m">samihan m</a></h5>
+            <h5>by <a class="credit" href="https://github.com/samihan-m">samihan m</a></h5>
         </div>
     </body>
 </html>
