@@ -2,7 +2,6 @@
 <html>
     <head>
         <title>Discord Link Redirector</title>
-        <script type="text/javascript" src ="base64.js"></script>
         <script type="text/javascript">
             function shorten() {
                 var discordURL = document.getElementById("discordURL").textContent
@@ -64,24 +63,34 @@
                         return btoa(bin.join('')).replace(/\+/g, '-').replace(/\//g, '_').replace(/=/g, '');;
                     }
 
+                    //turn the numbers into a base64 string
+
                     var serverCode = bnToB64(serverID)
 
                     var channelCode = bnToB64(channelID)
                     
-
+                    //put those new strings together for the new link
                     var shortenedLink = `${window.location.origin}/${serverCode}/${channelCode}/${fileName}`
 
-                    var outputBox = document.getElementById("shortenedURL")
-                    outputBox.textContent = shortenedLink
-                    outputBox.href = shortenedLink
+                    //print the new link onto the page
+                    var outputLink = document.getElementById("shortenedURL")
+                    outputLink.textContent = shortenedLink
+                    outputLink.href = shortenedLink
+
+                    //unhide the output
+                    var outputBox = document.getELementById("output-box")
                     outputBox.classList.remove("hidden")
                 }
             }
 
             function copyLink() {
                 var link = document.getElementById("shortenedURL")
+                //select the link
                 link.select()
+                link.setSelectionRange(0, 99999); /* For mobile devices */
+                //copy the text from the link
                 document.execCommand("copy")
+                //visually tell the user that the copy worked
                 var output = document.getElementById("console")
                 output.textContent = "Copied :)"
             }
