@@ -132,6 +132,13 @@
             color: black;
             padding: 4px 1em;
         }
+        .output {
+            border: 1px solid rgb(49, 134, 0);
+            border-radius: 15px;
+            font-family: Arial, Helvetica, sans-serif;
+            background-color: white;
+            padding: 4px 1em;
+        }
         </style>
     </head>
     <body>
@@ -143,8 +150,10 @@
                 <br>
                 <button id="shorten" onclick=shorten()>Shorten</button>
             </div>
+            <br>
+            <br>
             <div id="output-box" class="text-center hidden">
-                <a id="shortenedURL" href=""></a>
+                <a id="shortenedURL" class="output" href=""></a>
                 <br>
                 <br>
                 <button id="copy" onclick=copyLink()>Copy Link to Clipboard</button>
