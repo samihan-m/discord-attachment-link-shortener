@@ -77,6 +77,11 @@
                     outputLink.textContent = shortenedLink
                     outputLink.href = shortenedLink
 
+                    //also print the new link into the hidden input so it can be copied from
+                    var copiableLink = document.getElementById("copiable-link")
+                    copiableLink.defaultValue = shortenedLink
+                    console.log(copiableLink.defaultValue)
+
                     //unhide the output
                     var outputBox = document.getElementById("output-box")
                     outputBox.classList.remove("hidden")
@@ -84,12 +89,21 @@
             }
 
             function copyLink() {
-                var link = document.getElementById("shortenedURL")
                 //select the link
+                var link = document.getElementById("copiable-link")
+                //reveal the textarea because copying only works if the textarea is visible
+                link.classList.remove("hidden")
+
+                //select text
                 link.select()
                 link.setSelectionRange(0, 99999); /* For mobile devices */
+
                 //copy the text from the link
-                document.execCommand("copy")
+                console.log(document.execCommand("copy"))
+
+                //hide the area again
+                link.classList.add("hidden")
+
                 //visually tell the user that the copy worked
                 var output = document.getElementById("console")
                 output.textContent = "Copied :)"
@@ -114,7 +128,7 @@
             border: 1px solid rgb(255, 255, 255);
             border-radius: 15px;
             font-family: Arial, Helvetica, sans-serif;
-            background-color: slategray;
+            background-color: lightgray;
             color: black;
             padding: 4px 1em;
         }
@@ -133,10 +147,13 @@
                 <a id="shortenedURL" href=""></a>
                 <br>
                 <br>
-                <button id="copy" onclick=copyLink()>Copy Link</button>
+                <button id="copy" onclick=copyLink()>Copy Link to Clipboard</button>
                 <br>
                 <br>
                 <div id="console"></div>
+            </div>
+            <div id="hidden-output-box">
+                <input id="copiable-link" type="text" value="error" class="hidden">
             </div>
         </div>
     </body>
