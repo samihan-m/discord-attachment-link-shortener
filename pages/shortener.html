@@ -77,6 +77,14 @@
                     outputBox.classList.remove("hidden")
                 }
             }
+
+            function copyLink() {
+                var link = document.getElementById("shortenedURL")
+                link.select()
+                document.execCommand("copy")
+                var output = document.getElementById("console")
+                output.textContent = "Copied :)"
+            }
         </script>
         <style>
         /*Make the default colors for the site: background black, text white; and slightly bigger text.*/
@@ -112,8 +120,14 @@
                 <br>
                 <button id="shorten" onclick=shorten()>Shorten</button>
             </div>
-            <div id="output-box" class="text-center">
-                <a id="shortenedURL" class="hidden" href=""></a>
+            <div id="output-box" class="text-center hidden">
+                <a id="shortenedURL" href=""></a>
+                <br>
+                <br>
+                <button id="copy" onclick=copyLink()>Copy Link</button>
+                <br>
+                <br>
+                <div id="console"></div>
             </div>
         </div>
     </body>
