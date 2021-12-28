@@ -1,7 +1,6 @@
 # discord-attachment-link-shortener
 
- Check it out at http://dscd.link!
- If that doesn't work, try https://discord-link-shortener.herokuapp.com.
+ Check it out at https://dscd.link!
 
  A web page that shortens given cdn.discordapp.com/attachment/.. links to point towards the page and redirects those generated links to the proper Discord attachment link afterward.
  
