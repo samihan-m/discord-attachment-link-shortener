@@ -39,8 +39,8 @@ app.get('/shortener', async (request, response) => {
 });
 
 
-//Redirection route
-app.get('/:server/:channel/:fileName', async (request, response) => {
+//Attachment redirection route
+app.get('/file/:server/:channel/:fileName', async (request, response) => {
   //Read the server, channel, and file name from the URL and redirect to that.
 
   //test link: localhost:3000/745412423611056219/809369283325853696/IMG_20210211_032342295_HDR.jpg
@@ -73,7 +73,43 @@ app.get('/:server/:channel/:fileName', async (request, response) => {
   var channelID = b64ToBn(channelCode)
 
   var newURL = `https://cdn.discordapp.com/attachments/${serverID}/${channelID}/${fileName}`
-  console.log(newURL)
+  console.log(`Redirecting from ${request.url} to ${newURL}`)
+  response.redirect(newURL);
+});
+
+//Message link redirection route
+app.get('/msg/:server/:channel/:message', async (request, response) => {
+  //Read the server, channel, and message from the URL and redirect to that.
+
+  var serverCode = request.params.server
+  var channelCode = request.params.channel
+  var messageCode = request.params.message
+
+  function atob(b64) {
+    return Buffer.from(b64, 'base64').toString('binary');
+  }
+
+  //turns a url safe base 64 string into a big int
+  function b64ToBn(b64) {
+    b64 = b64.replace(/-/g, '+').replace(/_/g, '/');
+    var bin = atob(b64);
+    var hex = [];
+
+    bin.split('').forEach(function (ch) {
+        var h = ch.charCodeAt(0).toString(16);
+        if (h.length % 2) { h = '0' + h; }
+        hex.push(h);
+    });
+
+    return BigInt('0x' + hex.join(''));
+  }
+
+  var serverID = b64ToBn(serverCode)
+  var channelID = b64ToBn(channelCode)
+  var messageID = b64ToBn(messageCode)
+
+  var newURL = `https://discord.com/channels/${serverID}/${channelID}/${messageID}`
+  console.log(`Redirecting from ${request.url} to ${newURL}`)
   response.redirect(newURL);
 });
 

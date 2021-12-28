@@ -27,11 +27,11 @@ body {
     background-color: white;
     padding: 4px 1em;
 }
-/*Make credit link cyan.*/
-a.credit, a:visited.credit {
+/*Make credit and example links cyan.*/
+a.credit, a:visited.credit, a.example, a:visited.example {
     color: cyan;
 }
-/*Make active credit link purple*/
-a:active.credit {
+/*Make active credit and example link purple*/
+a:active.credit, a:active.example {
     color: purple;
 }

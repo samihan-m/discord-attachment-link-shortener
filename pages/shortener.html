@@ -7,8 +7,8 @@
     </head>
     <body>
         <div id="shortener-menu" class="text-center">
-            <h1>Shorten Discord Attachment URLS :)</h1>
-            <label>Discord Attachment URL: </label>
+            <h1>Shorten Discord URLs :)</h1>
+            <label>Discord Attachment or Message URL: </label>
             <br>
             <br>
             <div id="entry-box" class="text-center">
@@ -34,10 +34,25 @@
             <div id="hidden-output-box">
                 <input id="copiable-link" type="text" value="error" class="hidden">
             </div>
-            <h6>tip: don't click out of the Discord URL box after clearing it, you won't be able to type in it anymore.<br>refresh the page to reset it if that happens to you.</h6>
+            <h6>
+                Example attachment link: <a class="example" href="https://cdn.discordapp.com/attachments/763533415978762261/925208250020933652/Dreamcast_Swirl.jpeg">https://cdn.discordapp.com/attachments/763533415978762261/925208250020933652/Dreamcast_Swirl.jpeg</a><br>
+                Example message link: <a class="example" href="https://discord.com/channels/713671901985243137/763533415978762261/925208250188714034">https://discord.com/channels/713671901985243137/763533415978762261/925208250188714034</a><br>
+                (This message link won't be accessible for most of you, so don't try it. This is just an example of expected link format)
+            </h6>
+            <h6 style="display: none">tip: don't click out of the Discord URL box after clearing it, you won't be able to type in it anymore.<br>refresh the page to reset it if that happens to you.
+                <br>This doesn't seem necessary anymore - the text box seems to be working after being emptied and losing focus. Cool! Leaving this here in case it breaks again for easy re-appearing.
+            </h6>
             <br>
             <br>
             <h5>by <a class="credit" href="https://github.com/samihan-m">samihan m</a></h5>
         </div>
+        <script>
+            document.querySelector('span[contenteditable="true"]').addEventListener("paste", function(e) {
+                    e.preventDefault();
+                    var text = e.clipboardData.getData("text/plain");
+                    document.execCommand("insertHTML", false, text);
+                });
+            console.log("Parsed")
+        </script>
     </body>
 </html>

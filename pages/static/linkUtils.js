@@ -1,43 +1,28 @@
 function shorten() {
     var discordURL = document.getElementById("discordURL").textContent
-    var prefix = "https://cdn.discordapp.com/attachments/"
-    var prefixIndex = discordURL.indexOf(prefix)
-    console.log(prefixIndex)
-    if(prefixIndex == -1) {
-        alert("Not a recognized Discord attachment link, try a different one.")
+    var attachmentPrefix = "https://cdn.discordapp.com/attachments/"
+    var attachmentPrefixIndex = discordURL.indexOf(attachmentPrefix)
+    var messagePrefix = "https://discord.com/channels/"
+    var messagePrefixIndex = discordURL.indexOf(messagePrefix)
+    if(attachmentPrefixIndex == -1 && messagePrefixIndex == -1) {
+        alert("Not a recognized Discord attachment or message link, try a different one.")
     }
     else {
-        //read the file information from the given url - first, remove everything before the server ID to make splitting the rest easier.
-        var fileInformation = discordURL.substring(prefix.length).split("/")
-        console.log(fileInformation)
-
-        var serverID = BigInt(fileInformation[0])
-        console.log(serverID)
-        
-        var channelID = BigInt(fileInformation[1])
-        console.log(channelID)
-        
-        var fileName = fileInformation[2]
-        console.log(fileName)
-
-        /* This method of 'compressing' the length of the URL didn't actually make it smaller.
-        function idSplitterEncoder(id) { //takes a string and returns a string 'X/Y' where X is the hashid encoded first half and Y is the hashid encoded second half
-            var mid = Math.floor(id.length/2)
-            var head = id.substring(0, mid)
-            var tail = id.substring(mid)
-
-            var hashids = new Hashids()
-            var encodedHead = hashids.encode(head)
-            var encodedTail = hashids.encode(tail)
-
-            return `${encodedHead}-${encodedTail}`
+        var prefix
+        if(attachmentPrefixIndex > messagePrefixIndex) {
+            prefix = attachmentPrefix 
         }
+        else {
+            prefix = messagePrefix
+        }
+        //read the file information from the given url - first, remove everything before the server ID to make splitting the rest easier.
+        var linkInformation = discordURL.substring(prefix.length).split("/")
+        console.log(linkInformation)
 
-        var serverCode = idSplitterEncoder(serverID)
-        var channelCode = idSplitterEncoder(channelID)
-
-        var shortenedLink = `localhost:3000/${serverCode}/${channelCode}/${fileName}`
-        */
+        var serverID = BigInt(linkInformation[0])
+        var channelID = BigInt(linkInformation[1])
+        // thirdID can be a file name OR a message code
+        var thirdID = linkInformation[2]
 
         //Turns a big int into a url-safe base 64 string
         function bnToB64(bn) {
@@ -54,18 +39,32 @@ function shorten() {
                 bin.push(b);
                 i += 2;
             }
-
+            
             return btoa(bin.join('')).replace(/\+/g, '-').replace(/\//g, '_').replace(/=/g, '');;
         }
 
         //turn the numbers into a base64 string
 
         var serverCode = bnToB64(serverID)
-
         var channelCode = bnToB64(channelID)
         
-        //put those new strings together for the new link
-        var shortenedLink = `${window.location.origin}/${serverCode}/${channelCode}/${fileName}`
+        var shortenedLink = ""
+
+        // Construct the appropriate link based on if the link is an attachment or a message
+        if(attachmentPrefixIndex != -1) {
+            // Link is an attachment
+            shortenedLink = `${window.location.origin}/file/${serverCode}/${channelCode}/${thirdID}`
+        }
+        else if (messagePrefixIndex != -1){
+            // Link is a file
+            var messageCode = bnToB64(BigInt(thirdID))
+            shortenedLink = `${window.location.origin}/msg/${serverCode}/${channelCode}/${messageCode}`
+        }
+        else {
+            // Link is neither a file nor attachment yet passed the if check that verifies it is one or the other???
+            alert("Not a recognized Discord attachment or message link, try a different one.")
+            return
+        }
 
         //print the new link onto the page
         var outputLink = document.getElementById("shortenedURL")
