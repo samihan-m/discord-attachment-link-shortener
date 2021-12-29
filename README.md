@@ -2,7 +2,7 @@
 
  Check it out at https://dscd.link!
 
- A web page that shortens given cdn.discordapp.com/attachment/.. links to point towards the page and redirects those generated links to the proper Discord attachment link afterward.
+ A web page that shortens given cdn.discordapp.com/attachment/.. and discord.com/channels/ links to point towards the page and redirects those generated links to the proper Discord attachment link afterward.
  
  <b>Technology</b>
  
